@@ -72,7 +72,7 @@ header {
 .btn-regalo { display: inline-flex; align-items: center; padding: 0.85rem 1.75rem; border: 1px solid rgba(255,255,255,0.3); border-radius: 0.5rem; color: white; font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; font-family: 'Jost', sans-serif; transition: all 0.25s; cursor: pointer; background: transparent; text-decoration: none; }
 .btn-regalo:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.5); }
 .regalo-imagen { border-radius: 0.75rem; overflow: hidden; max-height: 460px; }
-.regalo-imagen img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
+.regalo-imagen img { width: 100%; height: 100%; object-fit: contain; display: block; background: var(--arena); }
 
 /* CONTACTO */
 .contacto { padding: 5rem 3rem; max-width: 800px; margin: 0 auto; text-align: center; }
@@ -160,7 +160,7 @@ footer { border-top: 1px solid var(--linea); padding: 1.75rem 3rem; display: fle
     <h1 class="hero-titulo">Masajes que<br><em>restauran</em> el<br>cuerpo y la mente</h1>
     <p class="hero-bajada">Un espacio pensado para vos. Cada sesión es única, diseñada desde la escucha, el movimiento consciente y la atención personalizada.</p>
     <div class="hero-acciones">
-      <a href="encalma_nuevo_turno.html" class="btn-turno-hero">Reservar turno</a>
+      <a href="https://wa.me/5491133252814?text=Hola%20Diego!%20Quisiera%20reservar%20un%20turno." target="_blank" class="btn-turno-hero">Reservar turno</a>
       <button class="btn-qr-hero" onclick="abrirQR()">Registrarse como cliente</button>
     </div>
   </div>
@@ -181,7 +181,6 @@ footer { border-top: 1px solid var(--linea); padding: 1.75rem 3rem; display: fle
         <div class="servicio-desc">Disminuye el estrés, promueve calma y bienestar, mejora el descanso y libera tensiones emocionales acumuladas.</div>
         <div class="servicio-footer">
           <span class="servicio-duracion">60 min</span>
-          <a href="encalma_nuevo_turno.html" class="servicio-cta">Reservar</a>
         </div>
       </div>
     </div>
@@ -193,7 +192,6 @@ footer { border-top: 1px solid var(--linea); padding: 1.75rem 3rem; display: fle
         <div class="servicio-desc">Alivia tensiones musculares profundas, reduce dolores de cuello y espalda, mejora la movilidad y la postura corporal.</div>
         <div class="servicio-footer">
           <span class="servicio-duracion">60 min</span>
-          <a href="encalma_nuevo_turno.html" class="servicio-cta">Reservar</a>
         </div>
       </div>
     </div>
@@ -205,7 +203,6 @@ footer { border-top: 1px solid var(--linea); padding: 1.75rem 3rem; display: fle
         <div class="servicio-desc">Estimula el sistema linfático, elimina líquidos retenidos, reduce pesadez e inflamación y mejora la circulación.</div>
         <div class="servicio-footer">
           <span class="servicio-duracion">60 min</span>
-          <a href="encalma_nuevo_turno.html" class="servicio-cta">Reservar</a>
         </div>
       </div>
     </div>
