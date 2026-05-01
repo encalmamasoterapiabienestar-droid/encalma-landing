@@ -330,15 +330,21 @@ function cargarTurnosOcupados(callback) {
   const cb = 'cb_' + Date.now();
   window[cb] = function(data) {
     if (data && data.turnos) {
-      turnosOcupados = data.turnos
-        .filter(t => t.estado && ['Pendiente','pendiente','Confirmado','confirmado','Realizado','realizado'].includes(t.estado))
-        .map(t => ({
-          fecha: normalizarFechaSheet(t.fecha),
-          hora:  (t.hora  || '').toString().replace(' hs','').replace('hs','').trim()
+      // La API devuelve arrays de filas — col 0=fecha, 1=hora, 6=estado
+      const filas = data.turnos;
+      const esArray = Array.isArray(filas[0]);
+      turnosOcupados = filas
+        .slice(1) // saltar encabezado
+        .filter(fila => {
+          const estado = esArray ? (fila[6] || '') : (fila.estado || '');
+          return ['Pendiente','pendiente','Confirmado','confirmado','Realizado','realizado'].includes(estado.toString().trim());
+        })
+        .map(fila => ({
+          fecha: normalizarFechaSheet(esArray ? fila[0] : fila.fecha),
+          hora:  (esArray ? fila[1] : fila.hora || '').toString().replace(' hs','').replace('hs','').trim()
         }));
     }
-    // DEBUG — borrar después de confirmar
-    console.log('Turnos ocupados cargados:', turnosOcupados.slice(0,3));
+    console.log('Turnos ocupados:', turnosOcupados.slice(0,5));
     delete window[cb];
     if (callback) callback();
   };
