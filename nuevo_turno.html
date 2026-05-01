@@ -306,7 +306,7 @@ function cargarTurnosOcupados() {
   window[cb] = function(data) {
     if (data && data.turnos) {
       turnosOcupados = data.turnos
-        .filter(t => t.estado && !['Cancelado','cancelado'].includes(t.estado))
+        .filter(t => t.estado && ['Pendiente','pendiente','Confirmado','confirmado','Realizado','realizado'].includes(t.estado))
         .map(t => ({ fecha: t.fecha, hora: t.hora }));
     }
     delete window[cb];
