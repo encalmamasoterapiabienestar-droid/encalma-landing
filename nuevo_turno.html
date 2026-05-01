@@ -301,6 +301,31 @@ document.addEventListener('DOMContentLoaded', () => {
   renderSemana();
 });
 
+// Convierte cualquier formato de fecha del Sheet a DD/MM/YYYY
+function normalizarFechaSheet(raw) {
+  if (!raw) return '';
+  const s = raw.toString().trim();
+  // Ya está en DD/MM/YYYY
+  if (/^\d{2}\/\d{2}\/\d{4}$/.test(s)) return s;
+  // Formato Date(año,mes,dia) que devuelve Apps Script serializado
+  const m = s.match(/Date\((\d+),(\d+),(\d+)\)/);
+  if (m) {
+    const dd = String(m[3]).padStart(2,'0');
+    const mm = String(parseInt(m[2])+1).padStart(2,'0');
+    return dd + '/' + mm + '/' + m[1];
+  }
+  // Intento parsear como fecha JS
+  try {
+    const d = new Date(s);
+    if (!isNaN(d)) {
+      const dd = String(d.getDate()).padStart(2,'0');
+      const mm = String(d.getMonth()+1).padStart(2,'0');
+      return dd + '/' + mm + '/' + d.getFullYear();
+    }
+  } catch(e) {}
+  return s;
+}
+
 function cargarTurnosOcupados(callback) {
   const cb = 'cb_' + Date.now();
   window[cb] = function(data) {
@@ -308,10 +333,12 @@ function cargarTurnosOcupados(callback) {
       turnosOcupados = data.turnos
         .filter(t => t.estado && ['Pendiente','pendiente','Confirmado','confirmado','Realizado','realizado'].includes(t.estado))
         .map(t => ({
-          fecha: (t.fecha || '').toString().trim(),
+          fecha: normalizarFechaSheet(t.fecha),
           hora:  (t.hora  || '').toString().replace(' hs','').replace('hs','').trim()
         }));
     }
+    // DEBUG — borrar después de confirmar
+    console.log('Turnos ocupados cargados:', turnosOcupados.slice(0,3));
     delete window[cb];
     if (callback) callback();
   };
