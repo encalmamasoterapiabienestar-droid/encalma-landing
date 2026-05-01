@@ -301,15 +301,19 @@ document.addEventListener('DOMContentLoaded', () => {
   renderSemana();
 });
 
-function cargarTurnosOcupados() {
+function cargarTurnosOcupados(callback) {
   const cb = 'cb_' + Date.now();
   window[cb] = function(data) {
     if (data && data.turnos) {
       turnosOcupados = data.turnos
         .filter(t => t.estado && ['Pendiente','pendiente','Confirmado','confirmado','Realizado','realizado'].includes(t.estado))
-        .map(t => ({ fecha: t.fecha, hora: t.hora }));
+        .map(t => ({
+          fecha: (t.fecha || '').toString().trim(),
+          hora:  (t.hora  || '').toString().replace(' hs','').replace('hs','').trim()
+        }));
     }
     delete window[cb];
+    if (callback) callback();
   };
   const s = document.createElement('script');
   s.src = API_URL + '?callback=' + cb;
@@ -317,7 +321,8 @@ function cargarTurnosOcupados() {
 }
 
 function estaOcupado(fechaStr, hora) {
-  return turnosOcupados.some(t => t.fecha === fechaStr && t.hora === hora);
+  const horaLimpia = hora.replace(' hs','').replace('hs','').trim();
+  return turnosOcupados.some(t => t.fecha === fechaStr && t.hora === horaLimpia);
 }
 
 // ── SEMANA ──────────────────────────────────────────────
@@ -421,6 +426,11 @@ function irPaso(n) {
   actualizarStepper(n);
   window.scrollTo({ top: 0, behavior: 'smooth' });
   if (n === 3) rellenarResumen();
+  if (n === 1) {
+    cargarTurnosOcupados(() => {
+      if (fechaSeleccionada) renderHorarios(fechaSeleccionada);
+    });
+  }
 }
 
 function actualizarStepper(paso) {
