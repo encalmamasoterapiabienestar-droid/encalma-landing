@@ -108,9 +108,19 @@ footer { border-top: 1px solid var(--linea); padding: 1.75rem 3rem; display: fle
 .qr-datos { font-size: 0.82rem; color: var(--texto-suave); line-height: 2.1; margin-bottom: 1.5rem; }
 .qr-datos strong { color: var(--mar-oscuro); font-weight: 500; }
 
-.login-box { background: var(--arena-clara); border-radius: 1rem; padding: 2.5rem 2rem; max-width: 320px; width: 100%; text-align: center; box-shadow: 0 32px 64px rgba(36,40,38,0.22); animation: modalEntra 0.3s ease; }
-.login-box h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 300; color: var(--mar-oscuro); margin-bottom: 0.2rem; }
-.login-sub { font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--tierra); margin-bottom: 1.75rem; }
+.login-box { background: white; border-radius: 1.25rem; padding: 2rem 1.75rem 1.5rem; max-width: 340px; width: 100%; text-align: center; box-shadow: 0 32px 64px rgba(36,40,38,0.22); animation: modalEntra 0.3s ease; }
+.login-logo-img { width: 90px; height: 90px; border-radius: 50%; object-fit: cover; margin-bottom: 0.9rem; border: 2px solid #c9a84c; }
+.login-marca { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 400; color: #2d5a3d; margin-bottom: 0.1rem; }
+.login-sub-marca { font-size: 0.6rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--tierra); margin-bottom: 0.9rem; }
+.login-divider { width: 40px; height: 1px; background: var(--linea); margin: 0 auto 0.9rem; }
+.login-sub { font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--texto-suave); margin-bottom: 1rem; }
+.login-input-wrap { position: relative; margin-bottom: 0.5rem; }
+.login-input-wrap .input-pass { margin-bottom: 0; padding-right: 2.8rem; }
+.btn-ojo { position: absolute; right: 0.85rem; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: var(--texto-suave); padding: 0; display: flex; align-items: center; }
+.btn-ojo svg { width: 18px; height: 18px; }
+.login-frase { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 0.85rem; color: var(--texto-suave); margin: 1rem 0 0.9rem; }
+.login-datos { font-size: 0.72rem; color: var(--texto-suave); line-height: 1.9; }
+.login-tels { display: flex; justify-content: center; gap: 1rem; }
 .input-pass { width: 100%; padding: 0.8rem 1rem; border: 1px solid var(--linea); border-radius: 0.5rem; font-size: 0.9rem; font-family: 'Jost', sans-serif; background: white; color: var(--texto); outline: none; text-align: center; letter-spacing: 0.2em; margin-bottom: 0.9rem; transition: border-color 0.2s; }
 .input-pass:focus { border-color: var(--mar); }
 .btn-ingresar { width: 100%; padding: 0.85rem; background: var(--mar-oscuro); color: white; border: none; border-radius: 0.5rem; font-size: 0.78rem; font-weight: 500; font-family: 'Jost', sans-serif; cursor: pointer; letter-spacing: 0.12em; text-transform: uppercase; transition: background 0.2s; margin-bottom: 0.75rem; }
@@ -273,12 +283,30 @@ footer { border-top: 1px solid var(--linea); padding: 1.75rem 3rem; display: fle
 <!-- MODAL LOGIN -->
 <div class="modal-overlay" id="modalLogin">
   <div class="login-box">
-    <h3>En Calma</h3>
-    <div class="login-sub">Acceso profesional</div>
-    <input type="password" class="input-pass" id="inputPass" placeholder="Contraseña" onkeydown="if(event.key==='Enter') verificarPass()"/>
+    <img src="encalma_logo_1.png" alt="En Calma" class="login-logo-img">
+    <div class="login-marca">En Calma</div>
+    <div class="login-sub-marca">Masoterapia & Bienestar</div>
+    <div class="login-divider"></div>
+    <div class="login-sub">Acceso restringido</div>
+    <div class="login-input-wrap">
+      <input type="password" class="input-pass" id="inputPass" placeholder="Contraseña" onkeydown="if(event.key==='Enter') verificarPass()"/>
+      <button class="btn-ojo" onclick="togglePass()" tabindex="-1">
+        <svg id="icono-ojo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+      </button>
+    </div>
     <div class="error-pass" id="errorPass"></div>
-    <button class="btn-ingresar" onclick="verificarPass()">Ingresar al panel</button>
-    <button class="btn-cerrar" onclick="cerrarModal('modalLogin')">Cancelar</button>
+    <button class="btn-ingresar" onclick="verificarPass()">Ingresar</button>
+    <div class="login-frase">Cuidar tu cuerpo es cuidar tu mente.</div>
+    <div class="login-divider"></div>
+    <div class="login-datos">
+      <span>📍 Tacuarí 347, Haedo, Buenos Aires</span>
+      <div class="login-tels">
+        <span>📞 11 3325-2814</span>
+        <span>📞 11 6681-1497</span>
+      </div>
+      <span>📸 @encalma_bienestar</span>
+    </div>
+    <button class="btn-cerrar" onclick="cerrarModal('modalLogin')" style="margin-top:1rem">Cancelar</button>
   </div>
 </div>
 
@@ -312,6 +340,11 @@ footer { border-top: 1px solid var(--linea); padding: 1.75rem 3rem; display: fle
       document.getElementById('inputPass').value = '';
       document.getElementById('inputPass').focus();
     }
+  }
+
+  function togglePass() {
+    const inp = document.getElementById('inputPass');
+    inp.type = inp.type === 'password' ? 'text' : 'password';
   }
 
   document.querySelectorAll('.modal-overlay').forEach(el => {
