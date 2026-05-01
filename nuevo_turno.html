@@ -349,7 +349,7 @@ function cargarTurnosOcupados(callback) {
     if (callback) callback();
   };
   const s = document.createElement('script');
-  s.src = API_URL + '?callback=' + cb;
+  s.src = API_URL + '?callback=' + cb + '&_t=' + Date.now();
   document.head.appendChild(s);
 }
 
@@ -420,7 +420,8 @@ function seleccionarDia(fecha, btn) {
   fechaSeleccionada = formatFecha(fecha);
   horaSeleccionada = null;
   document.getElementById('btnPaso1').disabled = true;
-  renderHorarios(fechaSeleccionada);
+  // Recarga turnos frescos antes de mostrar horarios
+  cargarTurnosOcupados(() => renderHorarios(fechaSeleccionada));
 }
 
 function renderHorarios(fechaStr) {
